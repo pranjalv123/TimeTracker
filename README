@@ -1,1 +1,1 @@
-Set up basedir in focus.py, data gets stored here.
+Set data_dir in src/focus_globals.py, then add src/focus.py to startup applications (or just run it manually).
