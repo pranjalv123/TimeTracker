@@ -48,7 +48,13 @@ class Focus:
     def properties(self,event,data=None):
         self.preferences.show()
 
+    def get_idle_time_ms(self):
+        inp = os.popen("xprintidle")
+        return int(inp.readline())
+        
     def write_focused_window(self, event):
+        if self.get_idle_time_ms() > 30000:
+            return gtk.TRUE
         inp = os.popen("xdotool getwindowfocus | xargs xprop _NET_WM_NAME -id")
         nm = inp.readline().split('"')[-2]
         tm = time.localtime()
@@ -57,6 +63,7 @@ class Focus:
         f.write(tofday + " => " + nm + "\n")
         f.close()
         return gtk.TRUE
+    
     def get_filename(self, t):
         return pglobals.data_dir + time.strftime("%Y-%m-%d", t)
 
