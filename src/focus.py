@@ -58,6 +58,8 @@ class Focus:
         inp = os.popen("xdotool getwindowfocus | xargs xprop _NET_WM_NAME -id")
         result = re.match('_NET_WM_NAME\(UTF8_STRING\) = "(?P<window_name>.*)"', inp.readline())
         nm = result.groupdict()['window_name']
+        if not nm:
+            return gtk.TRUE
         tm = time.localtime()
         f = open(self.get_filename(tm), "a")
         tofday = time.strftime("%H:%M:%S", tm)
